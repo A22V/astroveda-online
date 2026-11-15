@@ -1946,7 +1946,7 @@ def calculate_varshaphala(natal_chart: dict, natal_utc: datetime.datetime,
             "Дней": f"{days_span:.1f} дн.",
             "Начало": curr_dt.strftime("%d.%m.%Y %H:%M"),
             "Окончание": end_dt.strftime("%d.%m.%Y %H:%M"),
-            "Сила PVB": pvb_scores[m_lord],
+            "Сила PVB": pvb_scores.get(m_lord, 'Узел'),
             "Статус": "🟢 АКТИВЕН" if is_now else ""
         })
         curr_dt = end_dt
@@ -2000,7 +2000,7 @@ def calculate_varshaphala(natal_chart: dict, natal_utc: datetime.datetime,
         "muntha_house": muntha_house_varsha,
         "muntha_lord": muntha_lord,
         "candidates": candidates_roles,
-        "varshesha": f"{varshesha} (Вишва-бала: {pvb_scores[varshesha]})",
+        "varshesha": f"{varshesha} (Вишва-бала: {pvb_scores.get(varshesha, '-')})",
         "bala_rows": bala_rows,
         "mudda_rows": mudda_rows,
         "sahams": sahams_table,
@@ -2043,21 +2043,78 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    .stApp { background-color: #0b0f19; color: #f8fafc; }
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    .stApp {
+        background: radial-gradient(circle at 50% 0%, #1a162b 0%, #0d0b14 75%);
+        color: #f5eedc;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    h1, h2, h3, h4, h5 {
+        font-family: 'Cormorant Garamond', serif !important;
+        letter-spacing: 0.5px;
+        color: #f3c663 !important;
+    }
+    /* Боковая панель в стиле храмового дерева и бронзы */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #151124 0%, #0c0914 100%) !important;
+        border-right: 1px solid rgba(212, 175, 55, 0.28);
+    }
+    /* Шапка-картуш в стиле древних ведических манускриптов */
     .top-banner {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        border: 1px solid #334155;
-        border-left: 5px solid #38bdf8;
-        border-radius: 12px;
-        padding: 16px 22px;
-        margin-bottom: 18px;
+        background: linear-gradient(135deg, rgba(34, 27, 56, 0.92) 0%, rgba(19, 15, 32, 0.96) 100%);
+        border: 1px solid rgba(212, 175, 55, 0.45);
+        border-left: 5px solid #d4af37;
+        border-right: 5px solid #d4af37;
+        border-radius: 14px;
+        padding: 18px 26px;
+        margin-bottom: 22px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), inset 0 0 25px rgba(212, 175, 55, 0.08);
     }
-    .pill-green { background: rgba(34, 197, 94, 0.2); color: #4ade80; padding: 3px 10px; border-radius: 99px; font-size: 0.82rem; font-weight: 600; }
-    .pill-gold { background: rgba(234, 179, 8, 0.2); color: #facc15; padding: 3px 10px; border-radius: 99px; font-size: 0.82rem; font-weight: 600; }
+    .pill-green {
+        background: rgba(46, 160, 67, 0.18);
+        border: 1px solid rgba(74, 222, 128, 0.4);
+        color: #6ee7b7;
+        padding: 4px 12px;
+        border-radius: 99px;
+        font-size: 0.80rem;
+        font-weight: 600;
+    }
+    .pill-gold {
+        background: linear-gradient(90deg, rgba(212, 175, 55, 0.22), rgba(245, 158, 11, 0.25));
+        border: 1px solid #d4af37;
+        color: #fde68a;
+        padding: 4px 14px;
+        border-radius: 99px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.6px;
+    }
+    /* Карточки метрик */
+    div[data-testid="stMetric"] {
+        background: rgba(29, 23, 48, 0.72);
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        border-radius: 12px;
+        padding: 12px 16px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+    }
+    div[data-testid="stMetricValue"] {
+        color: #f3c663 !important;
+        font-family: 'Cormorant Garamond', serif !important;
+        font-size: 1.65rem !important;
+    }
+    /* Стилизация вкладок */
+    button[data-baseweb="tab"] {
+        font-weight: 600 !important;
+        color: #cbd5e1 !important;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] {
+        color: #f3c663 !important;
+        border-bottom-color: #d4af37 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -2351,20 +2408,23 @@ def render_south_svg(chart_data: dict, varga_code: str = "D1", rotate_house: int
         8:  (0, 315), 7: (105, 315), 6: (210, 315), 5: (315, 315)
     }
 
-    svg = '<svg viewBox="0 0 420 420" width="100%" style="background:#0f172a; border-radius:12px; border:2px solid #38bdf8; box-shadow: 0 4px 18px rgba(0,0,0,0.4);">'
-    svg += '<rect x="105" y="105" width="210" height="210" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>'
-    svg += f'<text x="210" y="198" fill="#38bdf8" font-size="18" font-weight="bold" text-anchor="middle">{varga_code} (Южный стиль)</text>'
-    svg += f'<text x="210" y="222" fill="#94a3b8" font-size="12" text-anchor="middle">1-й дом: {RASHI_RU_SHORT[asc_sign]}</text>'
+    svg = '<svg viewBox="0 0 420 420" width="100%" style="background:#141022; border-radius:14px; border:2px solid #d4af37; box-shadow: 0 6px 24px rgba(0,0,0,0.5);">'
+    svg += '<rect x="105" y="105" width="210" height="210" fill="#1d1730" stroke="#d4af37" stroke-opacity="0.55" stroke-width="1.5"/>'
+    svg += '<circle cx="210" cy="210" r="72" fill="none" stroke="#d4af37" stroke-opacity="0.15" stroke-width="1.2" stroke-dasharray="4,4"/>'
+    svg += '<circle cx="210" cy="210" r="52" fill="none" stroke="#d4af37" stroke-opacity="0.12" stroke-width="1"/>'
+    svg += f'<text x="210" y="182" fill="#d4af37" font-size="13" opacity="0.85" text-anchor="middle">☸ ДЖЙОТИШ МАНДАЛА ☸</text>'
+    svg += f'<text x="210" y="208" fill="#fde68a" font-size="19" font-weight="bold" text-anchor="middle">{varga_code} • Южный стиль</text>'
+    svg += f'<text x="210" y="232" fill="#cbd5e1" font-size="12" text-anchor="middle">Лагна (1-й дом): {RASHI_RU_SHORT[asc_sign]}</text>'
 
     for r_idx, (x, y) in coords.items():
         h_num = ((r_idx - asc_sign) % 12) + 1
         is_asc_box = (h_num == 1)
-        fill_col = "rgba(56, 189, 248, 0.10)" if is_asc_box else "none"
-        svg += f'<rect x="{x}" y="{y}" width="105" height="105" fill="{fill_col}" stroke="#334155" stroke-width="1.5"/>'
+        fill_col = "rgba(212, 175, 55, 0.14)" if is_asc_box else "none"
+        svg += f'<rect x="{x}" y="{y}" width="105" height="105" fill="{fill_col}" stroke="#4a3b2c" stroke-width="1.5"/>'
         svg += f'<text x="{x+7}" y="{y+16}" fill="#64748b" font-size="10" font-weight="bold">{RASHI_RU_SHORT[r_idx]}</text>'
         svg += f'<text x="{x+98}" y="{y+16}" fill="#facc15" font-size="10" font-weight="bold" text-anchor="end">{h_num} д.</text>'
         if is_asc_box:
-            svg += f'<line x1="{x}" y1="{y+22}" x2="{x+22}" y2="{y}" stroke="#38bdf8" stroke-width="2"/>'
+            svg += f'<line x1="{x}" y1="{y+22}" x2="{x+22}" y2="{y}" stroke="#d4af37" stroke-width="2"/>'
 
         items = boxes[r_idx]
         line1 = " ".join(lbl for _, lbl in items[:4])
@@ -2395,10 +2455,10 @@ def render_north_svg(chart_data: dict, varga_code: str = "D1", rotate_house: int
         9: (375, 315), 10: (315, 210), 11: (375, 105), 12: (315, 45)
     }
 
-    svg = '<svg viewBox="0 0 420 420" width="100%" style="background:#0f172a; border-radius:12px; border:2px solid #facc15; box-shadow: 0 4px 18px rgba(0,0,0,0.4);">'
+    svg = '<svg viewBox="0 0 420 420" width="100%" style="background:#141022; border-radius:14px; border:2px solid #d4af37; box-shadow: 0 4px 18px rgba(0,0,0,0.4);">'
     svg += '<rect x="0" y="0" width="420" height="420" fill="none" stroke="#475569" stroke-width="2"/>'
-    svg += '<line x1="0" y1="0" x2="420" y2="420" stroke="#334155" stroke-width="1.5"/>'
-    svg += '<line x1="420" y1="0" x2="0" y2="420" stroke="#334155" stroke-width="1.5"/>'
+    svg += '<line x1="0" y1="0" x2="420" y2="420" stroke="#4a3b2c" stroke-width="1.5"/>'
+    svg += '<line x1="420" y1="0" x2="0" y2="420" stroke="#4a3b2c" stroke-width="1.5"/>'
     svg += '<polygon points="210,0 420,210 210,420 0,210" fill="none" stroke="#facc15" stroke-width="2"/>'
 
     for h, (cx, cy) in h_centers.items():
@@ -2517,7 +2577,7 @@ time_underline = f"<u style='color:#facc15;'>{curr_local_dt.strftime('%H:%M:%S')
 st.markdown(f"""
 <div class="top-banner">
     <div>
-        <h2 style="margin:0; font-size:1.55rem; color:#38bdf8;">🪐 {p_name} &nbsp;<span class="pill-green">Rodden Rating: AA</span></h2>
+        <h2 style="margin:0; font-size:1.55rem; color:#38bdf8;">🕉️ {p_name} &nbsp;<span class="pill-green">Rodden Rating: AA</span></h2>
         <div style="color:#cbd5e1; margin-top:4px; font-size:0.95rem;">
             📅 <b>{curr_local_dt.strftime('%d.%m.%Y')}</b> &nbsp;|&nbsp; 🕒 <b>{time_underline}</b> (UTC{tz_val:+g}) &nbsp;|&nbsp;
             📍 <b>{preset_city}</b> ({lat:.2f}°N, {lon:.2f}°E) &nbsp;|&nbsp; 🧭 Айанамша: <b>{chart_data['ayanamsha_val']:.4f}°</b>
