@@ -2046,74 +2046,134 @@ st.markdown("""
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
     .stApp {
-        background: radial-gradient(circle at 50% 0%, #1a162b 0%, #0d0b14 75%);
-        color: #f5eedc;
+        background: radial-gradient(circle at 50% 0%, #1a162b 0%, #0e0b16 80%) !important;
+        color: #f8f4e6 !important;
         font-family: 'Plus Jakarta Sans', sans-serif;
     }
+
+    /* Принудительный яркий контрастный цвет для всех подписей, виджетов и текста */
+    label, .stWidgetLabel, div[data-testid="stWidgetLabel"] p,
+    div[data-testid="stMarkdownContainer"] p,
+    div[data-testid="stMarkdownContainer"] li,
+    div[data-testid="stMarkdownContainer"] span,
+    div[data-testid="stCaptionContainer"],
+    .stRadio label, .stCheckbox label, .stSelectbox label, .stNumberInput label, .stTextInput label, .stDateInput label, .stTimeInput label, .stSlider label {
+        color: #f5eedc !important;
+        font-weight: 600 !important;
+        font-size: 0.94rem !important;
+        opacity: 1 !important;
+    }
+
+    /* Поля ввода (белый текст на глубоком индиго с золотой рамкой) */
+    input, textarea, div[data-baseweb="select"] > div, div[data-baseweb="input"] > div {
+        background-color: #1f1933 !important;
+        color: #ffffff !important;
+        border: 1px solid rgba(212, 175, 55, 0.55) !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+    }
+    div[data-baseweb="select"] span {
+        color: #ffffff !important;
+    }
+
+    /* Заголовки секций и экспандеров */
     h1, h2, h3, h4, h5 {
         font-family: 'Cormorant Garamond', serif !important;
         letter-spacing: 0.5px;
-        color: #f3c663 !important;
+        color: #ffd97d !important;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
-    /* Боковая панель в стиле храмового дерева и бронзы */
+    details summary p, div[data-testid="stExpander"] summary span {
+        color: #ffd97d !important;
+        font-weight: 700 !important;
+        font-size: 1.02rem !important;
+    }
+    div[data-testid="stExpander"] {
+        background-color: rgba(29, 23, 48, 0.78) !important;
+        border: 1px solid rgba(212, 175, 55, 0.4) !important;
+        border-radius: 10px !important;
+    }
+
+    /* Боковая панель */
     section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #151124 0%, #0c0914 100%) !important;
-        border-right: 1px solid rgba(212, 175, 55, 0.28);
+        background: linear-gradient(180deg, #171226 0%, #0e0b18 100%) !important;
+        border-right: 2px solid rgba(212, 175, 55, 0.45) !important;
     }
-    /* Шапка-картуш в стиле древних ведических манускриптов */
+
+    /* Шапка-картуш */
     .top-banner {
-        background: linear-gradient(135deg, rgba(34, 27, 56, 0.92) 0%, rgba(19, 15, 32, 0.96) 100%);
-        border: 1px solid rgba(212, 175, 55, 0.45);
-        border-left: 5px solid #d4af37;
-        border-right: 5px solid #d4af37;
+        background: linear-gradient(135deg, #251d3d 0%, #141024 100%);
+        border: 1.5px solid #d4af37;
+        border-left: 6px solid #ffd97d;
+        border-right: 6px solid #ffd97d;
         border-radius: 14px;
         padding: 18px 26px;
-        margin-bottom: 22px;
+        margin-bottom: 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), inset 0 0 25px rgba(212, 175, 55, 0.08);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
     }
     .pill-green {
-        background: rgba(46, 160, 67, 0.18);
-        border: 1px solid rgba(74, 222, 128, 0.4);
-        color: #6ee7b7;
+        background: rgba(34, 197, 94, 0.25);
+        border: 1px solid #4ade80;
+        color: #86efac !important;
         padding: 4px 12px;
         border-radius: 99px;
-        font-size: 0.80rem;
-        font-weight: 600;
+        font-size: 0.84rem;
+        font-weight: 700;
     }
     .pill-gold {
-        background: linear-gradient(90deg, rgba(212, 175, 55, 0.22), rgba(245, 158, 11, 0.25));
-        border: 1px solid #d4af37;
-        color: #fde68a;
-        padding: 4px 14px;
+        background: linear-gradient(90deg, rgba(212, 175, 55, 0.32), rgba(245, 158, 11, 0.35));
+        border: 1px solid #ffd97d;
+        color: #fffbeb !important;
+        padding: 5px 14px;
         border-radius: 99px;
-        font-size: 0.82rem;
-        font-weight: 600;
+        font-size: 0.85rem;
+        font-weight: 700;
         letter-spacing: 0.6px;
     }
+
     /* Карточки метрик */
     div[data-testid="stMetric"] {
-        background: rgba(29, 23, 48, 0.72);
-        border: 1px solid rgba(212, 175, 55, 0.25);
+        background: #1d1730 !important;
+        border: 1px solid rgba(212, 175, 55, 0.45) !important;
         border-radius: 12px;
-        padding: 12px 16px;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+        padding: 14px 18px;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.4);
     }
     div[data-testid="stMetricValue"] {
-        color: #f3c663 !important;
+        color: #ffd97d !important;
         font-family: 'Cormorant Garamond', serif !important;
-        font-size: 1.65rem !important;
+        font-size: 1.75rem !important;
+        font-weight: 700 !important;
     }
-    /* Стилизация вкладок */
-    button[data-baseweb="tab"] {
+    div[data-testid="stMetricLabel"] p {
+        color: #e2e8f0 !important;
         font-weight: 600 !important;
-        color: #cbd5e1 !important;
+    }
+
+    /* Вкладки (Tabs) — делаем ярко читаемыми и неактивные, и активные! */
+    button[data-baseweb="tab"] {
+        background-color: rgba(30, 24, 50, 0.75) !important;
+        border: 1px solid rgba(212, 175, 55, 0.25) !important;
+        border-radius: 8px 8px 0 0 !important;
+        margin-right: 4px !important;
+        padding: 8px 14px !important;
+    }
+    button[data-baseweb="tab"] p, button[data-baseweb="tab"] span {
+        color: #e2e8f0 !important;
+        font-weight: 600 !important;
+        font-size: 0.92rem !important;
     }
     button[data-baseweb="tab"][aria-selected="true"] {
-        color: #f3c663 !important;
-        border-bottom-color: #d4af37 !important;
+        background: linear-gradient(180deg, rgba(212, 175, 55, 0.28) 0%, rgba(30, 24, 50, 0.95) 100%) !important;
+        border: 1px solid #ffd97d !important;
+        border-bottom: 3px solid #ffd97d !important;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] p, button[data-baseweb="tab"][aria-selected="true"] span {
+        color: #ffd97d !important;
+        font-weight: 700 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -2421,7 +2481,7 @@ def render_south_svg(chart_data: dict, varga_code: str = "D1", rotate_house: int
         is_asc_box = (h_num == 1)
         fill_col = "rgba(212, 175, 55, 0.14)" if is_asc_box else "none"
         svg += f'<rect x="{x}" y="{y}" width="105" height="105" fill="{fill_col}" stroke="#4a3b2c" stroke-width="1.5"/>'
-        svg += f'<text x="{x+7}" y="{y+16}" fill="#64748b" font-size="10" font-weight="bold">{RASHI_RU_SHORT[r_idx]}</text>'
+        svg += f'<text x="{x+7}" y="{y+16}" fill="#e2e8f0" font-size="10" font-weight="bold">{RASHI_RU_SHORT[r_idx]}</text>'
         svg += f'<text x="{x+98}" y="{y+16}" fill="#facc15" font-size="10" font-weight="bold" text-anchor="end">{h_num} д.</text>'
         if is_asc_box:
             svg += f'<line x1="{x}" y1="{y+22}" x2="{x+22}" y2="{y}" stroke="#d4af37" stroke-width="2"/>'
@@ -2474,6 +2534,162 @@ def render_north_svg(chart_data: dict, varga_code: str = "D1", rotate_house: int
     svg += '</svg>'
     return svg
 
+
+import io
+import os
+import urllib.request
+
+def ensure_cyrillic_font():
+    """Скачивает и регистрирует кириллический шрифт DejaVuSans для идеального отображения русского языка в PDF."""
+    font_path = "DejaVuSans.ttf"
+    if not os.path.exists(font_path):
+        try:
+            url = "https://github.com/dejavu-fonts/dejavu-fonts/raw/master/ttf/DejaVuSans.ttf"
+            urllib.request.urlretrieve(url, font_path)
+        except Exception:
+            return None
+    return font_path
+
+def generate_pdf_report(p_name: str, dt_local: datetime.datetime, city_name: str,
+                        lat: float, lon: float, tz_val: float,
+                        chart_data: dict, vim_data: dict, yogas_list: list,
+                        arudhas_list: list, shadbala_list: list) -> bytes:
+    """Генерирует красивый многостраничный PDF-паспорт гороскопа на русском языке для простых людей и астрологов."""
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib import colors
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4, leftMargin=28, rightMargin=28, topMargin=30, bottomMargin=30)
+
+    font_file = ensure_cyrillic_font()
+    font_name = "Helvetica"
+    if font_file and os.path.exists(font_file):
+        try:
+            pdfmetrics.registerFont(TTFont("DejaVuSans", font_file))
+            font_name = "DejaVuSans"
+        except Exception:
+            font_name = "Helvetica"
+
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        "VedicTitle", parent=styles["Title"], fontName=font_name, fontSize=18,
+        leading=22, textColor=colors.HexColor("#1e1b4b"), spaceAfter=6
+    )
+    sub_style = ParagraphStyle(
+        "VedicSub", parent=styles["Normal"], fontName=font_name, fontSize=10,
+        leading=14, textColor=colors.HexColor("#475569"), spaceAfter=12
+    )
+    h2_style = ParagraphStyle(
+        "VedicH2", parent=styles["Heading2"], fontName=font_name, fontSize=13,
+        leading=17, textColor=colors.HexColor("#92400e"), spaceBefore=12, spaceAfter=6
+    )
+    body_style = ParagraphStyle(
+        "VedicBody", parent=styles["Normal"], fontName=font_name, fontSize=9.5,
+        leading=13, textColor=colors.HexColor("#1e293b"), spaceAfter=4
+    )
+
+    story = []
+    story.append(Paragraph(f"ВЕДИЧЕСКИЙ ГОРОСКОП (ДЖЙОТИШ) — {p_name.upper()}", title_style))
+    story.append(Paragraph(
+        f"Дата и время рождения: {dt_local.strftime('%d.%m.%Y в %H:%M:%S')} (UTC{tz_val:+g}) | "
+        f"Место: {city_name} ({lat:.2f}N, {lon:.2f}E) | Айанамша: {chart_data['ayanamsha_val']:.4f}°",
+        sub_style
+    ))
+
+    # 1. Ключевое резюме для любого человека
+    asc_name = RASHIS[chart_data["asc_rashi"]]
+    moon_row = [p for p in chart_data["planets"] if p["clean_code"] == "Mo"][0]
+    sun_row = [p for p in chart_data["planets"] if p["clean_code"] == "Su"][0]
+    ak_row = [p for p in chart_data["planets"] if str(p["Карака"]).startswith("AK")][0]
+
+    story.append(Paragraph("1. Главные опорные точки судьбы (Краткое резюме)", h2_style))
+    story.append(Paragraph(f"• <b>Восходящий знак (Лагна / Асцендент):</b> {asc_name} — определяет физический потенциал, характер и главный вектор судьбы.", body_style))
+    story.append(Paragraph(f"• <b>Лунный знак (Чандра Раши) и Накшатра:</b> {moon_row['Раши (D1)']} | Звезда: {moon_row['Накшатра (Пада, Упр)']} — отражает устройство ума, эмоций и интуиции.", body_style))
+    story.append(Paragraph(f"• <b>Солнечный знак (Сурья Раши):</b> {sun_row['Раши (D1)']} — источник жизненной силы, авторитета и социальной реализации.", body_style))
+    story.append(Paragraph(f"• <b>Планета Души (Атмакарака):</b> {ak_row['Планета']} в знаке {ak_row['Раши (D1)']} — главный кармический талант и задача воплощения.", body_style))
+    story.append(Paragraph(f"• <b>Проживаемый сейчас период (Вимшоттари Даша):</b> {vim_data['active_chain']}", body_style))
+
+    # 2. Таблица планет (Раши D1 и Навамша D9)
+    story.append(Paragraph("2. Положение планет в карте рождения (Раши D1 и Навамша D9)", h2_style))
+    p_table_data = [["Планета", "Градусы", "Знак Раши (D1)", "Дом", "Навамша (D9)", "Накшатра", "Карака", "Статус / Сила"]]
+    for p in chart_data["planets"]:
+        clean_stat = p["Особые метки"].replace("🟢", "").replace("🔴", "").strip()
+        p_table_data.append([
+            p["Планета"], p["Градусы"], p["Раши (D1)"].split()[0], str(p["Дом"]),
+            p["Навамша (D9)"].split()[0], p["Накшатра (Пада, Упр)"], p["Карака"],
+            clean_stat if clean_stat != "—" else p["Отношение"].split()[0]
+        ])
+
+    t_planets = Table(p_table_data, colWidths=[85, 52, 65, 28, 65, 95, 40, 105])
+    t_planets.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1e1b4b")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#fef3c7")),
+        ("FONTNAME", (0, 0), (-1, -1), font_name),
+        ("FONTSIZE", (0, 0), (-1, 0), 8.5),
+        ("FONTSIZE", (0, 1), (-1, -1), 8),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
+        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.HexColor("#f8fafc"), colors.HexColor("#fefce8")]),
+        ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+        ("TOPPADDING", (0, 0), (-1, -1), 4),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+    ]))
+    story.append(t_planets)
+
+    # 3. Сила планет (Шад-бала)
+    story.append(Paragraph("3. Индекс силы планет (Шад-бала и Вимшопака-бала)", h2_style))
+    sb_data = [["Планета", "Стхана", "Диг", "Кала", "Чешта", "Всего (Вирупы)", "Рупы (Норма)", "Сила %", "Вимшопака (из 20)"]]
+    for sb in shadbala_list:
+        sb_data.append([
+            sb["Планета"], str(sb["Стхана"]), str(sb["Диг"]), str(sb["Кала"]), str(sb["Чешта"]),
+            str(sb["Всего (Вирупы)"]), sb["Рупы (Норма)"], sb["Сила %"].replace("🟢", "").replace("🔴", "").strip(),
+            sb["Вимшопака (max 20)"]
+        ])
+    t_sb = Table(sb_data, colWidths=[50, 50, 45, 45, 45, 75, 75, 65, 85])
+    t_sb.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#78350f")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+        ("FONTNAME", (0, 0), (-1, -1), font_name),
+        ("FONTSIZE", (0, 0), (-1, -1), 8),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
+        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#fffbeb")]),
+    ]))
+    story.append(t_sb)
+
+    # 4. Главные жизненные периоды (Вимшоттари Даша)
+    story.append(Paragraph("4. Большие планетные периоды жизни (Вимшоттари Махадаша на 120 лет)", h2_style))
+    d_table = [["Планета-управитель периода", "Дата начала", "Дата окончания", "Возраст вступления", "Статус"]]
+    for m in vim_data["mahadashas"]:
+        d_table.append([
+            f"Махадаша {m['Махадаша']}", m["Начало"], m["Окончание"], m["Возраст"],
+            "АКТИВЕН СЕЙЧАС" if m["Статус"] else "—"
+        ])
+    t_dasha = Table(d_table, colWidths=[130, 110, 110, 95, 90])
+    t_dasha.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1e1b4b")),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#fef3c7")),
+        ("FONTNAME", (0, 0), (-1, -1), font_name),
+        ("FONTSIZE", (0, 0), (-1, -1), 8.5),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
+        ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.HexColor("#f8fafc"), colors.white]),
+    ]))
+    story.append(t_dasha)
+
+    # 5. Трактовки Йог и особых комбинаций карты
+    story.append(Paragraph(f"5. Обнаруженные астрологические комбинации и Йоги ({len(yogas_list)} шт.)", h2_style))
+    for yg in yogas_list:
+        story.append(Paragraph(
+            f"• <b>{yg['Название йоги']} ({yg['Планеты']}) [{yg['Категория']}]:</b> {yg['Условие и эффект']}",
+            body_style
+        ))
+
+    doc.build(story)
+    return buffer.getvalue()
+
+
 def generate_jhd_file_content(name: str, dt_local: datetime.datetime, tz_offset: float, lat: float, lon: float) -> str:
     jhd_lines = [
         f"{dt_local.month}",
@@ -2523,11 +2739,32 @@ with st.sidebar:
     with st.expander("👤 Исходные данные карты", expanded=True):
         p_name = st.text_input("Имя человека или событие", value="Александр")
         p_gender = st.selectbox("Пол (для Синастрии и Таттв)", ["Мужской", "Женский"])
-        c_d, c_t = st.columns(2)
-        with c_d:
-            b_date = st.date_input("Дата рождения", datetime.date(1990, 5, 15), min_value=datetime.date(1500, 1, 1), max_value=datetime.date(2150, 12, 31))
-        with c_t:
-            b_time = st.time_input("Время (ЧЧ:ММ:СС)", datetime.time(14, 30, 0), step=60)
+        st.markdown("**📅 Дата рождения (Любой год: 1500 – 2150)**")
+        cd_day, cd_mon, cd_yr = st.columns([1, 1.3, 1.2])
+        with cd_day:
+            b_day = st.number_input("День", min_value=1, max_value=31, value=19, step=1)
+        with cd_mon:
+            MONTHS_RU = ["01 - Январь", "02 - Февраль", "03 - Март", "04 - Апрель", "05 - Май", "06 - Июнь",
+                         "07 - Июль", "08 - Август", "09 - Сентябрь", "10 - Октябрь", "11 - Ноябрь", "12 - Декабрь"]
+            b_mon_str = st.selectbox("Месяц", MONTHS_RU, index=9)
+            b_mon = int(b_mon_str.split(" - ")[0])
+        with cd_yr:
+            b_yr = st.number_input("Год", min_value=1500, max_value=2150, value=1970, step=1)
+        try:
+            b_date = datetime.date(int(b_yr), int(b_mon), int(b_day))
+        except ValueError:
+            b_date = datetime.date(int(b_yr), int(b_mon), 28)
+            st.warning("Число скорректировано по количеству дней в месяце.")
+
+        st.markdown("**🕒 Точное время рождения (Час : Мин : Сек)**")
+        ct_h, ct_m, ct_s = st.columns(3)
+        with ct_h:
+            b_hr = st.number_input("Час (0-23)", min_value=0, max_value=23, value=10, step=1)
+        with ct_m:
+            b_min = st.number_input("Мин (0-59)", min_value=0, max_value=59, value=5, step=1)
+        with ct_s:
+            b_sec = st.number_input("Сек (0-59)", min_value=0, max_value=59, value=0, step=1)
+        b_time = datetime.time(int(b_hr), int(b_min), int(b_sec))
 
         preset_city = st.selectbox("Быстрый выбор города (Авто-координаты)", list(PRESET_CITIES.keys()))
         def_lat, def_lon, def_tz = PRESET_CITIES[preset_city]
@@ -2563,14 +2800,35 @@ with st.sidebar:
     ashtakavarga_res = calculate_ashtakavarga(chart_data)
 
     st.divider()
-    jhd_str = generate_jhd_file_content(p_name, curr_local_dt, tz_val, lat, lon)
-    st.download_button(
-        label="📥 Экспорт карты в Jagannatha Hora (.jhd)",
-        data=jhd_str,
-        file_name=f"{p_name.replace(' ', '_')}.jhd",
-        mime="text/plain",
-        use_container_width=True
-    )
+    st.markdown("### 📄 Скачать готовый Гороскоп")
+    vim_for_pdf = calculate_vimshottari(curr_local_dt, chart_data["moon_lon"])
+    yogas_for_pdf = scan_classical_yogas(chart_data)
+    bala_for_pdf = calculate_bala_module(chart_data)["shadbala"]
+    try:
+        pdf_bytes = generate_pdf_report(
+            p_name, curr_local_dt, preset_city, lat, lon, tz_val,
+            chart_data, vim_for_pdf, yogas_for_pdf, arudhas_list, bala_for_pdf
+        )
+        st.download_button(
+            label="📕 Скачать полный отчет в PDF (Для всех)",
+            data=pdf_bytes,
+            file_name=f"Goroskop_{p_name.replace(' ', '_')}.pdf",
+            mime="application/pdf",
+            use_container_width=True
+        )
+    except Exception as e_pdf:
+        st.caption(f"PDF модуль загружается: {e_pdf}")
+
+    with st.expander("⚙️ Экспорт для астро-программ (.jhd)"):
+        st.caption("Специальный технический файл только для компьютерной программы Jagannatha Hora:")
+        jhd_str = generate_jhd_file_content(p_name, curr_local_dt, tz_val, lat, lon)
+        st.download_button(
+            label="📥 Экспорт в Jagannatha Hora (.jhd)",
+            data=jhd_str,
+            file_name=f"{p_name.replace(' ', '_')}.jhd",
+            mime="text/plain",
+            use_container_width=True
+        )
 
 time_underline = f"<u style='color:#facc15;'>{curr_local_dt.strftime('%H:%M:%S')} (сдвиг {total_shift_seconds:+}с)</u>" if total_shift_seconds != 0 else curr_local_dt.strftime('%H:%M:%S')
 
@@ -2645,6 +2903,24 @@ with top_tabs[0]:
         else:
             st.markdown(render_south_svg(chart_data, "D9" if style_mode.startswith("Параллельно") else third_v_code, rot_idx), unsafe_allow_html=True)
 
+    with st.expander("☸ Показать сразу 12 (или все 20) графических карт Варг на одном экране (D1 – D60)", expanded=False):
+        grid_mode = st.radio(
+            "Количество карт для одновременной отрисовки:",
+            ["12 главных Варг (D1, D2, D3, D4, D7, D9, D10, D12, D16, D20, D24, D60)", "Все 20 Варг Парашары (D1 – D60)"],
+            horizontal=True
+        )
+        varga_codes_to_draw = ["D1", "D2", "D3", "D4", "D7", "D9", "D10", "D12", "D16", "D20", "D24", "D60"] if grid_mode.startswith("12") else [v[0] for v in VARGAS_LIST]
+        varga_titles_map = dict(VARGAS_LIST)
+        for row_start in range(0, len(varga_codes_to_draw), 4):
+            cols_v = st.columns(4)
+            for idx_col, v_c in enumerate(varga_codes_to_draw[row_start:row_start+4]):
+                with cols_v[idx_col]:
+                    st.caption(f"**{varga_titles_map[v_c]}**")
+                    if style_mode == "Все в Северном стиле":
+                        st.markdown(render_north_svg(chart_data, v_c, rot_idx), unsafe_allow_html=True)
+                    else:
+                        st.markdown(render_south_svg(chart_data, v_c, rot_idx), unsafe_allow_html=True)
+
     target_sign = (chart_data["asc_rashi"] + insp_h_num - 1) % 12
     argala_2 = RASHI_RU_SHORT[(target_sign + 1) % 12]
     argala_4 = RASHI_RU_SHORT[(target_sign + 3) % 12]
@@ -2694,6 +2970,19 @@ with top_tabs[0]:
             row["Сила (Свой/Экз | Варготтама)"] = p["Шодаша-варга (Сила)"]
             varga_rows.append(row)
         st.dataframe(pd.DataFrame(varga_rows), use_container_width=True, hide_index=True)
+
+        st.markdown("#### ☸ Графическая галерея всех 20 дробных карт (D1 – D60)")
+        varga_titles_map = dict(VARGAS_LIST)
+        all_20_codes = [v[0] for v in VARGAS_LIST]
+        for r_i in range(0, len(all_20_codes), 4):
+            v_cols = st.columns(4)
+            for c_i, vc_code in enumerate(all_20_codes[r_i:r_i+4]):
+                with v_cols[c_i]:
+                    st.markdown(f"**{varga_titles_map[vc_code]}**")
+                    if style_mode == "Все в Северном стиле":
+                        st.markdown(render_north_svg(chart_data, vc_code, rot_idx), unsafe_allow_html=True)
+                    else:
+                        st.markdown(render_south_svg(chart_data, vc_code, rot_idx), unsafe_allow_html=True)
 
     with analysis_tabs[2]:
         sp_data = calculate_special_lagnas_and_sphutas(chart_data)
@@ -2907,7 +3196,7 @@ with top_tabs[4]:
     with sc1:
         partner_name = st.text_input("Имя партнера", "Партнер / Супруга")
     with sc2:
-        p2_date = st.date_input("Дата рождения партнера", datetime.date(1993, 8, 22))
+        p2_date = st.date_input("Дата рождения партнера (ГГГГ/ММ/ДД)", datetime.date(1975, 8, 22), min_value=datetime.date(1500, 1, 1), max_value=datetime.date(2150, 12, 31))
     with sc3:
         p2_time = st.time_input("Время рождения партнера", datetime.time(10, 15))
     with sc4:
