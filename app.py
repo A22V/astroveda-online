@@ -2535,61 +2535,165 @@ def render_north_svg(chart_data: dict, varga_code: str = "D1", rotate_house: int
     return svg
 
 
+
 import io
 import os
+import glob
 import urllib.request
 
-def ensure_cyrillic_font():
-    """Скачивает и регистрирует кириллический шрифт DejaVuSans для идеального отображения русского языка в PDF."""
-    font_path = "DejaVuSans.ttf"
-    if not os.path.exists(font_path):
+def register_cyrillic_fonts():
+    """Находит и регистрирует кириллический шрифт (обычный и жирный) на Linux (Streamlit Cloud), Windows или через CDN."""
+    candidates_reg = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+        "C:/Windows/Fonts/arial.ttf",
+        "DejaVuSans.ttf"
+    ]
+    candidates_bold = [
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "C:/Windows/Fonts/arialbd.ttf",
+        "DejaVuSans-Bold.ttf"
+    ]
+    try:
+        import matplotlib
+        mpl_dir = os.path.join(os.path.dirname(matplotlib.__file__), "mpl-data", "fonts", "ttf")
+        candidates_reg.insert(0, os.path.join(mpl_dir, "DejaVuSans.ttf"))
+        candidates_bold.insert(0, os.path.join(mpl_dir, "DejaVuSans-Bold.ttf"))
+    except Exception:
+        pass
+
+    reg_path = next((p for p in candidates_reg if os.path.exists(p)), None)
+    bold_path = next((p for p in candidates_bold if os.path.exists(p)), None)
+
+    if not reg_path:
+        found = glob.glob("/usr/share/fonts/**/DejaVuSans.ttf", recursive=True)
+        if found:
+            reg_path = found[0]
+    if not bold_path:
+        found_b = glob.glob("/usr/share/fonts/**/DejaVuSans-Bold.ttf", recursive=True)
+        if found_b:
+            bold_path = found_b[0]
+
+    if not reg_path:
         try:
-            url = "https://github.com/dejavu-fonts/dejavu-fonts/raw/master/ttf/DejaVuSans.ttf"
-            urllib.request.urlretrieve(url, font_path)
+            req = urllib.request.Request(
+                "https://cdn.jsdelivr.net/npm/dejavu-fonts-ttf@2.37.3/ttf/DejaVuSans.ttf",
+                headers={"User-Agent": "Mozilla/5.0"}
+            )
+            with urllib.request.urlopen(req, timeout=10) as resp, open("DejaVuSans.ttf", "wb") as out:
+                out.write(resp.read())
+            reg_path = "DejaVuSans.ttf"
         except Exception:
-            return None
-    return font_path
+            pass
+
+    if not bold_path or not os.path.exists(str(bold_path)):
+        bold_path = reg_path
+
+    if reg_path and os.path.exists(reg_path):
+        from reportlab.pdfbase import pdfmetrics
+        from reportlab.pdfbase.ttfonts import TTFont
+        pdfmetrics.registerFont(TTFont("CyrFont", reg_path))
+        pdfmetrics.registerFont(TTFont("CyrFont-Bold", bold_path))
+        pdfmetrics.registerFontFamily(
+            "CyrFont",
+            normal="CyrFont",
+            bold="CyrFont-Bold",
+            italic="CyrFont",
+            boldItalic="CyrFont-Bold"
+        )
+        return "CyrFont", "CyrFont-Bold"
+    return "Helvetica", "Helvetica-Bold"
+
+
+def draw_pdf_charts_row(chart_data: dict, font_reg: str, font_bold: str):
+    """Рисует векторные карты Раши (D1) и Навамша (D9) прямо внутри PDF-отчета."""
+    from reportlab.graphics.shapes import Drawing, Rect, Line, String
+    from reportlab.lib import colors
+
+    d = Drawing(535, 195)
+    v_matrix = chart_data["vargas_matrix"]
+
+    # Отрисовка двух карт рядом: слева D1 (Раши), справа D9 (Навамша)
+    for idx_chart, (v_code, title_ru) in enumerate([("D1", "Раши (D1) — Основная"), ("D9", "Навамша (D9) — Судьба и Брак")]):
+        ox = idx_chart * 275 + 10
+        oy = 5
+        size = 180
+        cell = size / 4.0  # 45 pt
+
+        asc_sign = v_matrix["As"][v_code]
+        boxes = {i: [] for i in range(12)}
+        for p in chart_data["planets"]:
+            c = p["clean_code"]
+            s_i = v_matrix[c][v_code]
+            lbl = p["Код"].replace("(R)", "R")
+            boxes[s_i].append(lbl)
+
+        # Фон карты
+        d.add(Rect(ox, oy, size, size, fillColor=colors.HexColor("#fffbeb"), strokeColor=colors.HexColor("#92400e"), strokeWidth=1.5))
+        d.add(Rect(ox + cell, oy + cell, cell * 2, cell * 2, fillColor=colors.HexColor("#fef3c7"), strokeColor=colors.HexColor("#b45309"), strokeWidth=1))
+
+        # Надпись в центре карты
+        d.add(String(ox + size / 2, oy + size / 2 + 6, title_ru, fontName=font_bold, fontSize=8.5, fillColor=colors.HexColor("#78350f"), textAnchor="middle"))
+        d.add(String(ox + size / 2, oy + size / 2 - 8, f"Лагна: {RASHI_RU_SHORT[asc_sign]}", fontName=font_reg, fontSize=8, fillColor=colors.HexColor("#1e293b"), textAnchor="middle"))
+
+        # Координаты 12 знаков в Южно-индийской карте (в системе координат ReportLab Y идет снизу вверх)
+        coords_pdf = {
+            11: (0, 3), 0: (1, 3), 1: (2, 3), 2: (3, 3),
+            10: (0, 2),                       3: (3, 2),
+            9:  (0, 1),                       4: (3, 1),
+            8:  (0, 0), 7: (1, 0), 6: (2, 0), 5: (3, 0)
+        }
+        for r_idx, (gx, gy) in coords_pdf.items():
+            bx = ox + gx * cell
+            by = oy + gy * cell
+            h_num = ((r_idx - asc_sign) % 12) + 1
+            bg_cell = colors.HexColor("#fde68a") if h_num == 1 else colors.HexColor("#fffbeb")
+            d.add(Rect(bx, by, cell, cell, fillColor=bg_cell, strokeColor=colors.HexColor("#d97706"), strokeWidth=0.8))
+            d.add(String(bx + 3, by + cell - 9, RASHI_RU_SHORT[r_idx], fontName=font_reg, fontSize=6.5, fillColor=colors.HexColor("#64748b")))
+            d.add(String(bx + cell - 3, by + cell - 9, f"{h_num}д", fontName=font_bold, fontSize=6.5, fillColor=colors.HexColor("#b45309"), textAnchor="end"))
+
+            p_items = boxes[r_idx]
+            l1 = " ".join(p_items[:3])
+            l2 = " ".join(p_items[3:6])
+            d.add(String(bx + cell / 2, by + cell / 2 - 1, l1, fontName=font_bold, fontSize=7.5, fillColor=colors.HexColor("#0f172a"), textAnchor="middle"))
+            if l2:
+                d.add(String(bx + cell / 2, by + cell / 2 - 11, l2, fontName=font_reg, fontSize=7, fillColor=colors.HexColor("#334155"), textAnchor="middle"))
+
+    return d
+
 
 def generate_pdf_report(p_name: str, dt_local: datetime.datetime, city_name: str,
                         lat: float, lon: float, tz_val: float,
                         chart_data: dict, vim_data: dict, yogas_list: list,
                         arudhas_list: list, shadbala_list: list) -> bytes:
-    """Генерирует красивый многостраничный PDF-паспорт гороскопа на русском языке для простых людей и астрологов."""
+    """Генерирует красивый многостраничный PDF-паспорт гороскопа на русском языке (с графическими картами D1 и D9)."""
     from reportlab.lib.pagesizes import A4
     from reportlab.lib import colors
     from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
     from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-    from reportlab.pdfbase import pdfmetrics
-    from reportlab.pdfbase.ttfonts import TTFont
 
     buffer = io.BytesIO()
-    doc = SimpleDocTemplate(buffer, pagesize=A4, leftMargin=28, rightMargin=28, topMargin=30, bottomMargin=30)
+    doc = SimpleDocTemplate(buffer, pagesize=A4, leftMargin=28, rightMargin=28, topMargin=28, bottomMargin=28)
 
-    font_file = ensure_cyrillic_font()
-    font_name = "Helvetica"
-    if font_file and os.path.exists(font_file):
-        try:
-            pdfmetrics.registerFont(TTFont("DejaVuSans", font_file))
-            font_name = "DejaVuSans"
-        except Exception:
-            font_name = "Helvetica"
+    font_name, font_bold = register_cyrillic_fonts()
 
     styles = getSampleStyleSheet()
     title_style = ParagraphStyle(
-        "VedicTitle", parent=styles["Title"], fontName=font_name, fontSize=18,
-        leading=22, textColor=colors.HexColor("#1e1b4b"), spaceAfter=6
+        "VedicTitle", parent=styles["Title"], fontName=font_bold, fontSize=16,
+        leading=20, textColor=colors.HexColor("#1e1b4b"), spaceAfter=4
     )
     sub_style = ParagraphStyle(
-        "VedicSub", parent=styles["Normal"], fontName=font_name, fontSize=10,
-        leading=14, textColor=colors.HexColor("#475569"), spaceAfter=12
+        "VedicSub", parent=styles["Normal"], fontName=font_name, fontSize=9.5,
+        leading=13, textColor=colors.HexColor("#475569"), spaceAfter=10, alignment=1
     )
     h2_style = ParagraphStyle(
-        "VedicH2", parent=styles["Heading2"], fontName=font_name, fontSize=13,
-        leading=17, textColor=colors.HexColor("#92400e"), spaceBefore=12, spaceAfter=6
+        "VedicH2", parent=styles["Heading2"], fontName=font_bold, fontSize=12.5,
+        leading=16, textColor=colors.HexColor("#92400e"), spaceBefore=10, spaceAfter=5
     )
     body_style = ParagraphStyle(
         "VedicBody", parent=styles["Normal"], fontName=font_name, fontSize=9.5,
-        leading=13, textColor=colors.HexColor("#1e293b"), spaceAfter=4
+        leading=13.5, textColor=colors.HexColor("#1e293b"), spaceAfter=4
     )
 
     story = []
@@ -2599,6 +2703,10 @@ def generate_pdf_report(p_name: str, dt_local: datetime.datetime, city_name: str
         f"Место: {city_name} ({lat:.2f}N, {lon:.2f}E) | Айанамша: {chart_data['ayanamsha_val']:.4f}°",
         sub_style
     ))
+
+    # Графические карты Раши (D1) и Навамша (D9) прямо в PDF
+    story.append(draw_pdf_charts_row(chart_data, font_name, font_bold))
+    story.append(Spacer(1, 8))
 
     # 1. Ключевое резюме для любого человека
     asc_name = RASHIS[chart_data["asc_rashi"]]
@@ -2628,7 +2736,8 @@ def generate_pdf_report(p_name: str, dt_local: datetime.datetime, city_name: str
     t_planets.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1e1b4b")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#fef3c7")),
-        ("FONTNAME", (0, 0), (-1, -1), font_name),
+        ("FONTNAME", (0, 0), (-1, 0), font_bold),
+        ("FONTNAME", (0, 1), (-1, -1), font_name),
         ("FONTSIZE", (0, 0), (-1, 0), 8.5),
         ("FONTSIZE", (0, 1), (-1, -1), 8),
         ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
@@ -2652,7 +2761,8 @@ def generate_pdf_report(p_name: str, dt_local: datetime.datetime, city_name: str
     t_sb.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#78350f")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
-        ("FONTNAME", (0, 0), (-1, -1), font_name),
+        ("FONTNAME", (0, 0), (-1, 0), font_bold),
+        ("FONTNAME", (0, 1), (-1, -1), font_name),
         ("FONTSIZE", (0, 0), (-1, -1), 8),
         ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
         ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#fffbeb")]),
@@ -2671,7 +2781,8 @@ def generate_pdf_report(p_name: str, dt_local: datetime.datetime, city_name: str
     t_dasha.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1e1b4b")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.HexColor("#fef3c7")),
-        ("FONTNAME", (0, 0), (-1, -1), font_name),
+        ("FONTNAME", (0, 0), (-1, 0), font_bold),
+        ("FONTNAME", (0, 1), (-1, -1), font_name),
         ("FONTSIZE", (0, 0), (-1, -1), 8.5),
         ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
         ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.HexColor("#f8fafc"), colors.white]),
