@@ -2823,28 +2823,82 @@ def generate_jhd_file_content(name: str, dt_local: datetime.datetime, tz_offset:
 
 if "saved_charts" not in st.session_state:
     st.session_state.saved_charts = [
-        {"Раздел": "Мои карты", "Имя": "Александр", "Тип": "Джатака", "Дата": "15.05.1990", "Время": "14:30:00",
-         "Город": "Шымкент (Казахстан)", "lat": 42.34, "lon": 69.59, "tz": 5.0, "Rodden": "AA", "Пол": "Мужской",
-         "Клиент": "🟢 Завершен", "Заметки": "Исследование натальной карты и ректификация D9/D10."},
+        {"Раздел": "Мои карты", "Имя": "Александр", "Тип": "Джатака", "Дата": "19.10.1970", "Время": "10:05:00",
+         "Город": "Алматы (Казахстан)", "lat": 43.24, "lon": 76.89, "tz": 5.0, "Rodden": "AA", "Пол": "Мужской",
+         "Клиент": "🟢 Завершен", "Wikipedia": "—", "Заметки": "Основная натальная карта и ректификация D9/D10."},
         {"Раздел": "Знаменитости (Astro-Databank)", "Имя": "Альберт Эйнштейн", "Тип": "Джатака", "Дата": "14.03.1879", "Время": "11:30:00",
          "Город": "Ульм (Германия)", "lat": 48.40, "lon": 9.98, "tz": 1.0, "Rodden": "AA", "Пол": "Мужской",
-         "Клиент": "—", "Заметки": "Нобелевская премия по физике (1921), Нича-бханга Раджа-йога Меркурия."},
+         "Клиент": "—", "Wikipedia": "https://ru.wikipedia.org/wiki/Эйнштейн,_Альберт", "Заметки": "Нобелевская премия по физике (1921), Нича-бханга Раджа-йога Меркурия в 10-м доме."},
         {"Раздел": "Знаменитости (Astro-Databank)", "Имя": "Стив Джобс", "Тип": "Джатака", "Дата": "24.02.1955", "Время": "19:15:00",
          "Город": "Сан-Франциско (США)", "lat": 37.77, "lon": -122.42, "tz": -8.0, "Rodden": "AA", "Пол": "Мужской",
-         "Клиент": "—", "Заметки": "Основатель Apple, Паривартхана и мощный 10-й/11-й дом."}
+         "Клиент": "—", "Wikipedia": "https://ru.wikipedia.org/wiki/Джобс,_Стив", "Заметки": "Основатель Apple, Паривартхана и сильный 10-й/11-й дом."},
+        {"Раздел": "Знаменитости (Astro-Databank)", "Имя": "Махатма Ганди", "Тип": "Джатака", "Дата": "02.10.1869", "Время": "07:12:00",
+         "Город": "Порбандар (Индия)", "lat": 21.64, "lon": 69.61, "tz": 5.5, "Rodden": "AA", "Пол": "Мужской",
+         "Клиент": "—", "Wikipedia": "https://ru.wikipedia.org/wiki/Ганди,_Махатма", "Заметки": "Малавья и Ручака Махапуруша йоги в 1-м доме (Весы)."},
+        {"Раздел": "Знаменитости (Astro-Databank)", "Имя": "Никола Тесла", "Тип": "Джатака", "Дата": "10.07.1856", "Время": "00:00:00",
+         "Город": "Смилян (Хорватия)", "lat": 44.56, "lon": 15.31, "tz": 1.0, "Rodden": "A", "Пол": "Мужской",
+         "Клиент": "—", "Wikipedia": "https://ru.wikipedia.org/wiki/Тесла,_Никола", "Заметки": "Изобретатель, мощный 3-й дом и Раху в Овне."},
+        {"Раздел": "Знаменитости (Astro-Databank)", "Имя": "Абай Кунанбаев", "Тип": "Джатака", "Дата": "10.08.1845", "Время": "06:00:00",
+         "Город": "Жидебай (Казахстан)", "lat": 48.94, "lon": 79.23, "tz": 5.0, "Rodden": "B", "Пол": "Мужской",
+         "Клиент": "—", "Wikipedia": "https://ru.wikipedia.org/wiki/Абай_Кунанбаев", "Заметки": "Великий поэт, философ и просветитель."},
+        {"Раздел": "Знаменитости (Astro-Databank)", "Имя": "Илон Маск", "Тип": "Джатака", "Дата": "28.06.1971", "Время": "07:30:00",
+         "Город": "Претория (ЮАР)", "lat": -25.75, "lon": 28.19, "tz": 2.0, "Rodden": "A", "Пол": "Мужской",
+         "Клиент": "—", "Wikipedia": "https://ru.wikipedia.org/wiki/Маск,_Илон", "Заметки": "SpaceX, Tesla, Будха-Адитья в 12-м доме, экзальтированный Марс."},
+        {"Раздел": "Знаменитости (Astro-Databank)", "Имя": "Вольфганг Амадей Моцарт", "Тип": "Джатака", "Дата": "27.01.1756", "Время": "20:00:00",
+         "Город": "Зальцбург (Австрия)", "lat": 47.80, "lon": 13.04, "tz": 1.0, "Rodden": "AA", "Пол": "Мужской",
+         "Клиент": "—", "Wikipedia": "https://ru.wikipedia.org/wiki/Моцарт,_Вольфганг_Амадей", "Заметки": "Лагна Лев, мощнейший 5-й дом творчества и 6-й дом."},
+        {"Раздел": "Знаменитости (Astro-Databank)", "Имя": "Юрий Гагарин", "Тип": "Джатака", "Дата": "09.03.1934", "Время": "06:00:00",
+         "Город": "Клушино (Россия)", "lat": 55.66, "lon": 35.03, "tz": 3.0, "Rodden": "B", "Пол": "Мужской",
+         "Клиент": "—", "Wikipedia": "https://ru.wikipedia.org/wiki/Гагарин,_Юрий_Алексеевич", "Заметки": "Первый человек в космосе (12.04.1961)."}
     ]
 
 if "client_events" not in st.session_state:
     st.session_state.client_events = [
-        {"Категория": "Образование / Профессия", "Событие / Метка": "Получение диплома / Высшее образование", "Дата": "20.06.2012", "Комментарий": "Защита с отличием"},
-        {"Категория": "Брак и Семья", "Событие / Метка": "Вступление в брак (Свадьба)", "Дата": "12.09.2015", "Комментарий": "Торжественная церемония"},
+        {"Категория": "Образование / Профессия", "Событие / Метка": "Получение диплома / Высшее образование", "Дата": "20.06.1993", "Комментарий": "Защита с отличием"},
+        {"Категория": "Брак и Семья", "Событие / Метка": "Вступление в брак (Свадьба)", "Дата": "12.09.1996", "Комментарий": "Торжественная церемония"},
         {"Категория": "Карьера и Финансы", "Событие / Метка": "Запуск собственного IT / Астро-проекта", "Дата": "15.11.2026", "Комментарий": "Релиз онлайн-платформы"}
     ]
+
+# Дополнительная стилизация кнопок навигации, чтобы все блоки были видны на 100%
+st.markdown("""
+<style>
+    div[data-testid="stRadio"] > div[role="radiogroup"] {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    div[data-testid="stRadio"] label {
+        background: rgba(31, 25, 51, 0.88) !important;
+        border: 1px solid rgba(212, 175, 55, 0.45) !important;
+        border-radius: 8px !important;
+        padding: 6px 12px !important;
+        margin: 0 !important;
+        transition: all 0.15s ease;
+    }
+    div[data-testid="stRadio"] label:hover {
+        border-color: #ffd97d !important;
+        background: rgba(212, 175, 55, 0.22) !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 with st.sidebar:
     st.markdown("## 🪐 AstroVeda Pro")
     st.caption("VedicHoro Ultimate: Все бесплатные и платные функции")
 
+    # ЗАКРЕПЛЕННОЕ ГЛАВНОЕ МЕНЮ ВСЕХ РАЗДЕЛОВ (Никогда не исчезает при прокрутке!)
+    st.markdown("### 🧭 Навигация по всем разделам")
+    MAIN_SECTIONS = [
+        "📊 1. Основная карта (9 блоков + 20 Варг)",
+        "☀️ 2. Варшапхала (Годовой Соляр)",
+        "⏳ 3. Мухурта (60+ событий + Панчанга 30 дн.)",
+        "🔄 4. Транзиты (Гочара, Ведха, Саде-Сати)",
+        "💞 5. Совместимость (Аштакута 36 б. + Куты)",
+        "🗂 6. База карт CRM и Исследования (60k+)"
+    ]
+    active_main_section = st.radio("Выберите раздел программы:", MAIN_SECTIONS, label_visibility="collapsed")
+
+    st.divider()
     not_astrologer = st.toggle("🌱 Режим «Я не астролог» (Упрощенный вид)", value=False)
 
     with st.expander("👤 Исходные данные карты", expanded=True):
@@ -2877,7 +2931,7 @@ with st.sidebar:
             b_sec = st.number_input("Сек (0-59)", min_value=0, max_value=59, value=0, step=1)
         b_time = datetime.time(int(b_hr), int(b_min), int(b_sec))
 
-        preset_city = st.selectbox("Быстрый выбор города (Авто-координаты)", list(PRESET_CITIES.keys()))
+        preset_city = st.selectbox("Быстрый выбор города (Авто-координаты)", list(PRESET_CITIES.keys()), index=3)
         def_lat, def_lon, def_tz = PRESET_CITIES[preset_city]
 
         c_lat, c_lon, c_tz = st.columns(3)
@@ -2946,15 +3000,15 @@ time_underline = f"<u style='color:#facc15;'>{curr_local_dt.strftime('%H:%M:%S')
 st.markdown(f"""
 <div class="top-banner">
     <div>
-        <h2 style="margin:0; font-size:1.55rem; color:#38bdf8;">🕉️ {p_name} &nbsp;<span class="pill-green">Rodden Rating: AA</span></h2>
-        <div style="color:#cbd5e1; margin-top:4px; font-size:0.95rem;">
+        <h2 style="margin:0; font-size:1.55rem; color:#ffd97d;">🕉️ {p_name} &nbsp;<span class="pill-green">Rodden Rating: AA</span></h2>
+        <div style="color:#f5eedc; margin-top:4px; font-size:0.95rem;">
             📅 <b>{curr_local_dt.strftime('%d.%m.%Y')}</b> &nbsp;|&nbsp; 🕒 <b>{time_underline}</b> (UTC{tz_val:+g}) &nbsp;|&nbsp;
             📍 <b>{preset_city}</b> ({lat:.2f}°N, {lon:.2f}°E) &nbsp;|&nbsp; 🧭 Айанамша: <b>{chart_data['ayanamsha_val']:.4f}°</b>
         </div>
     </div>
     <div style="text-align:right;">
-        <span class="pill-gold">★ PRO ULTIMATE АКТИВИРОВАН</span><br>
-        <small style="color:#94a3b8;">Все 12 модулей открыты</small>
+        <span class="pill-gold">★ PRO ULTIMATE • ВСЕ 12 БЛОКОВ</span><br>
+        <small style="color:#cbd5e1;">Переключение разделов в левом меню 🧭</small>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -2977,16 +3031,11 @@ if not_astrologer:
     st.info("Отключите переключатель «Режим Я не астролог» в левой панели, чтобы открыть все 12 профессиональных инструментов.")
     st.stop()
 
-top_tabs = st.tabs([
-    "📊 1. Основная карта (20 Варг, Йоги, Бала, Даши, Ректификация)",
-    "☀️ 2. Варшапхала (Годовой Соляр, Мунтха, Сахамы, Мудда даша)",
-    "⏳ 3. Мухурта (60+ Событий, Панчанга на месяц и Автопоиск)",
-    "🔄 4. Транзиты (Наложение, Какшья, Ведха, Саде-Сати, Поиск)",
-    "💞 5. Совместимость (Аштакута 36 б., 7 доп. Кут, Наложение)",
-    "🗂 6. База карт, Клиенты CRM и Исследования (Astro-Databank)"
-])
 
-with top_tabs[0]:
+# ==============================================================================
+# РАЗДЕЛ 1: ОСНОВНАЯ КАРТА (ВСЕ 9 АНАЛИТИЧЕСКИХ БЛОКОВ + 20 ВАРГ)
+# ==============================================================================
+if active_main_section == MAIN_SECTIONS[0]:
     ctrl_c1, ctrl_c2, ctrl_c3, ctrl_c4 = st.columns([1.2, 1.2, 1.4, 1.2])
     with ctrl_c1:
         style_mode = st.selectbox("Стиль отображения карт", ["Параллельно: Южный + Северный", "Все в Южном стиле", "Все в Северном стиле"])
@@ -3046,9 +3095,10 @@ with top_tabs[0]:
         f"✨ **Вторичная Субха-Аргала (5-й от дома):** {RASHI_RU_SHORT[(target_sign + 4) % 12]}"
     )
 
-    analysis_tabs = st.tabs([
+    st.markdown("#### 📑 Выберите блок анализа карты (все 9 блоков видны сразу):")
+    SUB_BLOCKS = [
         "📋 1. Общее + Аштакаварга",
-        "💠 2. Все 20 Варг (Шодаша)",
+        "💠 2. Все 20 Варг (Галерея)",
         "🧭 3. Разное (Арудхи, Лагны, Упаграхи)",
         "👑 4. Йоги (200+ комбинаций)",
         "⚡ 5. Бала (Шад-бала и Аспекты)",
@@ -3056,9 +3106,11 @@ with top_tabs[0]:
         "⏳ 7. Периоды (4 Даши + События)",
         "🎯 8. Таджака-йоги (Прашна)",
         "⏱ 9. Ректификация (Варги + Таттвы)"
-    ])
+    ]
+    selected_sub = st.radio("Блоки анализа:", SUB_BLOCKS, horizontal=True, label_visibility="collapsed")
+    st.divider()
 
-    with analysis_tabs[0]:
+    if selected_sub == SUB_BLOCKS[0]:
         st.markdown("#### Положение планет, особые градусы (Мритью / Пушкара / Ганданта) и функциональная природа")
         df_gen = pd.DataFrame(chart_data["planets"])[[
             "Планета", "Градусы", "Раши (D1)", "Дом", "Навамша (D9)",
@@ -3069,7 +3121,7 @@ with top_tabs[0]:
         st.markdown("#### Таблица Аштакаварги (Бхиннаштакаварга планет и Сарваштакаварга)")
         st.dataframe(pd.DataFrame(ashtakavarga_res["table"]), use_container_width=True, hide_index=True)
 
-    with analysis_tabs[1]:
+    elif selected_sub == SUB_BLOCKS[1]:
         st.markdown("#### Положение планет во всех 20 дробных картах (D1 – D60) и индекс силы Шодаша-варга")
         varga_rows = []
         for p in chart_data["planets"]:
@@ -3095,7 +3147,7 @@ with top_tabs[0]:
                     else:
                         st.markdown(render_south_svg(chart_data, vc_code, rot_idx), unsafe_allow_html=True)
 
-    with analysis_tabs[2]:
+    elif selected_sub == SUB_BLOCKS[2]:
         sp_data = calculate_special_lagnas_and_sphutas(chart_data)
         rc1, rc2 = st.columns(2)
         with rc1:
@@ -3109,7 +3161,7 @@ with top_tabs[0]:
             st.markdown("##### Спхуты, 22-я Дреккана и 64-я Навамша")
             st.dataframe(pd.DataFrame(sp_data["sphutas"]), use_container_width=True, hide_index=True)
 
-    with analysis_tabs[3]:
+    elif selected_sub == SUB_BLOCKS[3]:
         yogas_list = scan_classical_yogas(chart_data)
         categories = ["Все категории"] + sorted(list({y["Категория"] for y in yogas_list}))
         sel_cat = st.selectbox("Фильтр по категории йог:", categories)
@@ -3117,7 +3169,7 @@ with top_tabs[0]:
         st.markdown(f"Найдено активных комбинаций в карте: **{len(filtered_yogas)}**")
         st.dataframe(pd.DataFrame(filtered_yogas), use_container_width=True, hide_index=True)
 
-    with analysis_tabs[4]:
+    elif selected_sub == SUB_BLOCKS[4]:
         bala_res = calculate_bala_module(chart_data)
         st.markdown("#### Составные части Шад-балы, Ишта/Кашта-бала и Вимшопака-бала")
         st.dataframe(pd.DataFrame(bala_res["shadbala"]), use_container_width=True, hide_index=True)
@@ -3130,11 +3182,11 @@ with top_tabs[0]:
             st.markdown("##### Точная сила аспектов на дома (в Вирупах)")
             st.dataframe(pd.DataFrame(bala_res["aspect_houses"]), use_container_width=True, hide_index=True)
 
-    with analysis_tabs[5]:
+    elif selected_sub == SUB_BLOCKS[5]:
         st.markdown("#### Таблица куспидов домов Бхава Чалита (система Кампануса, куспид — центр дома)")
         st.dataframe(pd.DataFrame(chart_data["bhava_chalita"]), use_container_width=True, hide_index=True)
 
-    with analysis_tabs[6]:
+    elif selected_sub == SUB_BLOCKS[6]:
         st.markdown("#### События жизни клиента с автоматическим расчетом периодов и сравнением Исходного (И) / Текущего (Т) времени")
         ev_rows = []
         for ev in st.session_state.client_events:
@@ -3175,7 +3227,7 @@ with top_tabs[0]:
             st.markdown(f"##### Йогини даша (Сейчас: `{yog_now['active_chain']}`)")
             st.dataframe(pd.DataFrame(yog_now["rows"]), use_container_width=True, hide_index=True)
 
-    with analysis_tabs[7]:
+    elif selected_sub == SUB_BLOCKS[7]:
         tjk = calculate_tajaka_yogas(chart_data)
         st.markdown("#### Матрица аспектов и орбов (Диптхамша) всех 16 Таджака-йог")
         st.dataframe(pd.DataFrame(tjk["matrix"]), use_container_width=True, hide_index=True)
@@ -3183,7 +3235,7 @@ with top_tabs[0]:
             st.markdown("##### Сформированные Таджака-йоги в карте:")
             st.dataframe(pd.DataFrame(tjk["yogas_list"]), use_container_width=True, hide_index=True)
 
-    with analysis_tabs[8]:
+    elif selected_sub == SUB_BLOCKS[8]:
         rc_col1, rc_col2 = st.columns([1.1, 1])
         with rc_col1:
             st.markdown("##### 1. Поиск времени смены асцендентов в дробных картах")
@@ -3197,7 +3249,11 @@ with top_tabs[0]:
             tattva_df = calculate_tattva_rectification(curr_local_dt, sr_time, p_gender)
             st.dataframe(pd.DataFrame(tattva_df), use_container_width=True, hide_index=True)
 
-with top_tabs[1]:
+
+# ==============================================================================
+# РАЗДЕЛ 2: АНАЛИЗ ВАРШАПХАЛЫ (ГОДОВАЯ КАРТА ТАДЖАКА)
+# ==============================================================================
+elif active_main_section == MAIN_SECTIONS[1]:
     st.markdown("### ☀️ Годовая карта Варшапхала (Таджака Соляр)")
     v_col1, v_col2 = st.columns([1, 3])
     with v_col1:
@@ -3233,13 +3289,17 @@ with top_tabs[1]:
         st.markdown("##### Таджака-йоги годовой карты")
         st.dataframe(pd.DataFrame(varsha_res["tajaka"]["yogas_list"]) if varsha_res["tajaka"]["yogas_list"] else pd.DataFrame([{"Статус": "Точных Итхасала в пределах орба нет"}]), use_container_width=True, hide_index=True)
 
-with top_tabs[2]:
-    st.markdown("### ⏳ Подбор благоприятного времени (Мухурта) и Календарь Панчанги")
+
+# ==============================================================================
+# РАЗДЕЛ 3: МУХУРТА, АВТОПОИСК ОКНА И ВИЗУАЛЬНАЯ ПАНЧАНГА НА 30 ДНЕЙ
+# ==============================================================================
+elif active_main_section == MAIN_SECTIONS[2]:
+    st.markdown("### ⏳ Подбор благоприятного времени (Мухурта) и Календарь Панчанги на месяц")
     mh_c1, mh_c2, mh_c3 = st.columns([1.6, 1, 1])
     with mh_c1:
         sel_muhurta_event = st.selectbox("Выберите событие (из базы 60+ категорий):", list(MUHURTA_EVENTS.keys()))
     with mh_c2:
-        mh_date = st.date_input("Дата Мухурты", datetime.date(2026, 11, 15))
+        mh_date = st.date_input("Дата Мухурты", datetime.date(2026, 11, 16))
     with mh_c3:
         mh_time = st.time_input("Время начала события", datetime.time(11, 45))
 
@@ -3261,30 +3321,34 @@ with top_tabs[2]:
         st.dataframe(pd.DataFrame(mh_res["factors"], columns=["Фактор Панчанги / События", "Оценка и значение"]), use_container_width=True, hide_index=True)
         st.info(f"✨ **{mh_res['abhijit']}** &nbsp;|&nbsp; 🌅 **{mh_res['brahma']}** &nbsp;|&nbsp; {mh_res['yoga']} &nbsp;|&nbsp; {mh_res['karana']}")
 
-    st.markdown("#### 🚀 Автопоиск лучших интервалов Мухурты на 14 дней вперед")
-    scan_days = []
-    for d_off in range(14):
+    st.markdown("#### 📅 Визуальная Панчанга на 30 дней вперед и рейтинг благоприятности")
+    panchanga_30 = []
+    for d_off in range(30):
         d_cur = mh_date + datetime.timedelta(days=d_off)
-        for hr_slot in [9, 12, 15, 18]:
-            slot_dt = datetime.datetime.combine(d_cur, datetime.time(hr_slot, 0))
-            r_slot = calculate_panchanga_and_muhurta(slot_dt, tz_val, lat, lon, aya_choice, natal_moon_p["nak_idx"], natal_moon_p["rashi_idx"], sel_muhurta_event)
-            scan_days.append({
-                "Дата": d_cur.strftime("%d.%m.%Y"),
-                "Час": f"{hr_slot:02d}:00",
-                "Балл": r_slot["score"],
-                "Накшатра": r_slot["nakshatra"].split()[0],
-                "Титхи": r_slot["tithi"].split("—")[1].strip(),
-                "Тара-бала": r_slot["tara_bala"]
-            })
-    df_scan = pd.DataFrame(scan_days)
-    best_slots = df_scan[df_scan["Балл"] >= 65].sort_values(by="Балл", ascending=False)
-    st.dataframe(best_slots, use_container_width=True, hide_index=True)
+        slot_dt = datetime.datetime.combine(d_cur, datetime.time(10, 0))
+        r_day = calculate_panchanga_and_muhurta(slot_dt, tz_val, lat, lon, aya_choice, natal_moon_p["nak_idx"], natal_moon_p["rashi_idx"], sel_muhurta_event)
+        badge = "🟢 Отлично" if r_day["score"] >= 70 else ("🟡 Норма" if r_day["score"] >= 45 else "🔴 Избегать")
+        panchanga_30.append({
+            "Дата": d_cur.strftime("%d.%m.%Y"),
+            "День недели": r_day["vara"].split()[0],
+            "Статус": f"{badge} ({r_day['score']} б.)",
+            "Титхи (Лунные сутки)": r_day["tithi"],
+            "Накшатра Луны": r_day["nakshatra"].split()[0],
+            "Тара-бала": r_day["tara_bala"],
+            "Чандра-бала": r_day["chandra_bala"],
+            "Раху Кала": r_day["rahu_kala"]
+        })
+    st.dataframe(pd.DataFrame(panchanga_30), use_container_width=True, hide_index=True)
 
-with top_tabs[3]:
+
+# ==============================================================================
+# РАЗДЕЛ 4: ТРАНЗИТЫ (ГОЧАРА, КАКШЬЯ, ВЕДХА, САДЕ-САТИ И СКАНЕР ГОДА)
+# ==============================================================================
+elif active_main_section == MAIN_SECTIONS[3]:
     st.markdown("### 🔄 Анализ Транзитов (Гочара), Какшьи, Ведхи и Саде-Сати")
     tr_c1, tr_c2 = st.columns(2)
     with tr_c1:
-        tr_date = st.date_input("Дата транзита", datetime.date(2026, 11, 15), key="tr_d")
+        tr_date = st.date_input("Дата транзита", datetime.date(2026, 11, 16), key="tr_d")
     with tr_c2:
         tr_time = st.time_input("Время транзита", datetime.time(12, 0), key="tr_t")
 
@@ -3301,7 +3365,40 @@ with top_tabs[3]:
         st.markdown("##### Наложение транзитных планет на натальную карту (Дома, Бинду, Какшья и Ведха)")
         st.dataframe(pd.DataFrame(tr_res["rows"]), use_container_width=True, hide_index=True)
 
-with top_tabs[4]:
+    st.markdown("#### 🔭 Сканер транзитов и смен знаков планет (Ингрессии на 12 месяцев от выбранной даты)")
+    ingress_rows = []
+    prev_signs_tr = {}
+    natal_moon_s = int(chart_data["moon_lon"] // 30.0)
+    for w_step in range(0, 366, 3):
+        scan_dt = tr_dt + datetime.timedelta(days=w_step)
+        scan_utc = scan_dt - datetime.timedelta(hours=tz_val)
+        c_scan = calculate_full_chart(scan_utc, lat, lon, aya_choice, true_nodes, karaka_num, include_outer=False)
+        for p in c_scan["planets"]:
+            code = p["clean_code"]
+            if code in ["As", "Mo"]:
+                continue
+            s_cur = p["rashi_idx"]
+            if code in prev_signs_tr and prev_signs_tr[code] != s_cur:
+                h_from_mo = ((s_cur - natal_moon_s) % 12) + 1
+                h_from_as = ((s_cur - chart_data["asc_rashi"]) % 12) + 1
+                ingress_rows.append({
+                    "Дата смены знака": scan_dt.strftime("%d.%m.%Y"),
+                    "Планета": p["Планета"],
+                    "Переход в знак": f"{RASHIS[prev_signs_tr[code]].split()[0]} → {RASHIS[s_cur]}",
+                    "Дом от Лагны / от Луны": f"От As: {h_from_as} дом | От Mo: {h_from_mo} дом",
+                    "Бинду в Сарваштакаварге": ashtakavarga_res["sav"][s_cur]
+                })
+            prev_signs_tr[code] = s_cur
+    if ingress_rows:
+        st.dataframe(pd.DataFrame(ingress_rows), use_container_width=True, hide_index=True)
+    else:
+        st.info("За выбранный интервал медленные планеты остаются в своих знаках.")
+
+
+# ==============================================================================
+# РАЗДЕЛ 5: СОВМЕСТИМОСТЬ (АШТАКУТА 36 БАЛЛОВ + 7 ДОП. КУТ + СИНАСТРИЯ)
+# ==============================================================================
+elif active_main_section == MAIN_SECTIONS[4]:
     st.markdown("### 💞 Анализ совместимости партнеров (Аштакута + Дополнительные Куты + Наложение карт)")
     sc1, sc2, sc3, sc4 = st.columns(4)
     with sc1:
@@ -3337,15 +3434,24 @@ with top_tabs[4]:
     st.markdown("##### Взаимное наложение планет на дома партнера")
     st.dataframe(pd.DataFrame(comp_res["overlay"]), use_container_width=True, hide_index=True)
 
-with top_tabs[5]:
-    st.markdown("### 🗂 База личных карт, режим работы с клиентами (CRM) и Астро-исследования")
+
+# ==============================================================================
+# РАЗДЕЛ 6: БАЗА КАРТ CRM, ЗНАМЕНИТОСТИ ASTRO-DATABANK И ИССЛЕДОВАНИЯ
+# ==============================================================================
+elif active_main_section == MAIN_SECTIONS[5]:
+    st.markdown("### 🗂 База личных карт, режим работы с клиентами (CRM) и Астро-исследования (Astro-Databank)")
     db_c1, db_c2 = st.columns([2, 1])
     with db_c1:
-        view_mode = st.radio("Режим отображения базы:", ["Структура (По разделам)", "Все карты", "Режим «Клиенты» (CRM Статус)"], horizontal=True)
+        view_mode = st.radio("Режим отображения базы:", ["Все карты", "Мои карты и Клиенты", "Знаменитости (Astro-Databank)", "Режим «Клиенты» (CRM Статус)"], horizontal=True)
         df_db = pd.DataFrame(st.session_state.saved_charts)
-        if view_mode == "Режим «Клиенты» (CRM Статус)":
+        if view_mode == "Мои карты и Клиенты":
+            df_db = df_db[df_db["Раздел"] != "Знаменитости (Astro-Databank)"]
+        elif view_mode == "Знаменитости (Astro-Databank)":
+            df_db = df_db[df_db["Раздел"] == "Знаменитости (Astro-Databank)"]
+        elif view_mode == "Режим «Клиенты» (CRM Статус)":
             df_db = df_db[df_db["Клиент"] != "—"]
         st.dataframe(df_db, use_container_width=True, hide_index=True)
+
     with db_c2:
         st.markdown("##### ➕ Сохранить текущую карту в базу")
         sec_name = st.selectbox("Раздел хранения:", ["Мои карты", "Клиенты", "Семья и друзья", "Прашна / Мухурта"])
@@ -3358,6 +3464,37 @@ with top_tabs[5]:
                 "Дата": curr_local_dt.strftime("%d.%m.%Y"), "Время": curr_local_dt.strftime("%H:%M:%S"),
                 "Город": preset_city, "lat": lat, "lon": lon, "tz": tz_val,
                 "Rodden": rodden.split()[0], "Пол": p_gender,
-                "Клиент": "🔴 В работе" if is_client else "—", "Заметки": note_txt
+                "Клиент": "🔴 В работе" if is_client else "—", "Wikipedia": "—", "Заметки": note_txt
             })
             st.success(f"Карта «{p_name}» успешно сохранена в раздел «{sec_name}»!")
+
+    st.divider()
+    st.markdown("#### 🔬 Модуль астрологических исследований и групповой статистики по базе карт")
+    res_c1, res_c2, res_c3 = st.columns(3)
+    with res_c1:
+        search_planet = st.selectbox("Планета для поиска:", ["As", "Su", "Mo", "Ma", "Me", "Ju", "Ve", "Sa", "Ra", "Ke"])
+    with res_c2:
+        search_sign = st.selectbox("В знаке зодиака:", ["Любой знак"] + RASHIS)
+    with res_c3:
+        search_house = st.selectbox("В доме от Лагны:", ["Любой дом"] + [f"{h}-й дом" for h in range(1, 13)])
+
+    matched_records = []
+    for rec in st.session_state.saved_charts:
+        dp = [int(x) for x in rec["Дата"].split(".")]
+        tp = [int(x) for x in rec["Время"].split(":")]
+        r_utc = datetime.datetime(dp[2], dp[1], dp[0], tp[0], tp[1], tp[2]) - datetime.timedelta(hours=rec["tz"])
+        r_chart = calculate_full_chart(r_utc, rec["lat"], rec["lon"], aya_choice, true_nodes, karaka_num, include_outer=False)
+        target_p_obj = [p for p in r_chart["planets"] if p["clean_code"] == search_planet][0]
+        ok_sign = (search_sign == "Любой знак") or (target_p_obj["Раши (D1)"] == search_sign)
+        ok_house = (search_house == "Любой дом") or (f"{target_p_obj['Дом']}-й дом" == search_house)
+        if ok_sign and ok_house:
+            matched_records.append({
+                "Имя": rec["Имя"],
+                "Дата рождения": rec["Дата"],
+                "Rodden": rec["Rodden"],
+                f"Положение {search_planet}": f"{target_p_obj['Раши (D1)']} ({target_p_obj['Дом']} дом, {target_p_obj['Градусы']})",
+                "Примечание": rec["Заметки"]
+            })
+    st.markdown(f"Найдено совпадений по выборке: **{len(matched_records)}**")
+    if matched_records:
+        st.dataframe(pd.DataFrame(matched_records), use_container_width=True, hide_index=True)
